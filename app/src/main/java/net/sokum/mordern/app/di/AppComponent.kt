@@ -1,21 +1,19 @@
 package net.sokum.mordern.app.di
 
-import android.content.Context
-import dagger.BindsInstance
 import dagger.Component
+import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
-import net.sokum.mordern.app.ui.NewsListFragment
+import net.sokum.mordern.app.App
 import javax.inject.Singleton
 
 
 @Singleton
 @Component(modules = [
     AndroidSupportInjectionModule::class,
-    NetworkModule::class]
+    NetworkModule::class,
+    ActivityModule::class]
 )
-interface AppComponent {
+abstract class AppComponent : AndroidInjector<App> {
     @Component.Factory
-    interface Factory {
-        fun create(@BindsInstance context : Context) : AppComponent
-    }
+    abstract class Factory : AndroidInjector.Factory<App>
 }

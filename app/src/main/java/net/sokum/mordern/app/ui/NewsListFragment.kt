@@ -8,18 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
-import net.sokum.mordern.app.App
 import net.sokum.mordern.app.R
 import net.sokum.mordern.app.data.NewsListViewModel
 import net.sokum.mordern.app.data.TopHeadLines
 import javax.inject.Inject
 
-class NewsListFragment : Fragment() {
+class NewsListFragment : Fragment(), HasAndroidInjector {
+
+
+    @Inject
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
+
     @Inject
     lateinit var viewModel : NewsListViewModel
 
@@ -32,11 +34,11 @@ class NewsListFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
         super.onAttach(context)
 
         loadData()
     }
-
     private fun loadData() {
         viewModel.headLines.observe(this, Observer {
             showHeadLines(it)
@@ -46,4 +48,6 @@ class NewsListFragment : Fragment() {
     private fun showHeadLines(headLines: TopHeadLines) {
         Log.d("SOKUM", "headLine items ="+headLines.totalResults)
     }
+
+    override fun androidInjector() = androidInjector
 }
