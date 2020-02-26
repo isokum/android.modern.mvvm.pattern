@@ -14,6 +14,7 @@ import dagger.android.support.AndroidSupportInjection
 import net.sokum.mordern.app.R
 import net.sokum.mordern.app.data.NewsListViewModel
 import net.sokum.mordern.app.data.TopHeadLines
+import net.sokum.mordern.app.di.ViewModelFactory
 import javax.inject.Inject
 
 class NewsListFragment : Fragment(), HasAndroidInjector {
@@ -23,6 +24,8 @@ class NewsListFragment : Fragment(), HasAndroidInjector {
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
     @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
     lateinit var viewModel : NewsListViewModel
 
     override fun onCreateView(
