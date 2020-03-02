@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
@@ -15,18 +17,15 @@ import net.sokum.mordern.app.R
 import net.sokum.mordern.app.data.NewsListViewModel
 import net.sokum.mordern.app.data.TopHeadLines
 import net.sokum.mordern.app.di.ViewModelFactory
+import net.sokum.mordern.app.di.createViewModel
 import javax.inject.Inject
 
 class NewsListFragment : Fragment(), HasAndroidInjector {
 
-
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    lateinit var viewModel : NewsListViewModel
+    private lateinit var viewModel : NewsListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +42,7 @@ class NewsListFragment : Fragment(), HasAndroidInjector {
         loadData()
     }
     private fun loadData() {
+        viewModel = this.createViewModel {  }
         viewModel.headLines.observe(this, Observer {
             showHeadLines(it)
         })

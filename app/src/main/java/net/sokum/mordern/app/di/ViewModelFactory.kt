@@ -1,30 +1,32 @@
 package net.sokum.mordern.app.di
 
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import dagger.Binds
-import dagger.MapKey
-import dagger.Module
-import dagger.multibindings.IntoMap
-import net.sokum.mordern.app.data.NewsListViewModel
-import javax.inject.Inject
-import javax.inject.Provider
-import javax.inject.Singleton
-import kotlin.reflect.KClass
+import androidx.lifecycle.ViewModelProviders
 
-@Singleton
-class ViewModelFactory @Inject constructor(private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T = viewModels[modelClass]?.get() as T
+
+inline fun <reified T: ViewModel> AppCompatActivity.createViewModel(crossinline factory: () -> T): T = T::class.java.let { clazz ->
+    ViewModelProviders.of(this, object: ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            if(modelClass == clazz) {
+                @Suppress("UNCHECKED_CAST")
+                return factory() as T
+            }
+            throw IllegalArgumentException("Unexpected argument: $modelClass")
+        }
+    }).get(clazz)
 }
 
-@Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER)
-@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
-@MapKey
-internal annotation class ViewModelKey(val value: KClass<out ViewModel>)
-
-@Module
-abstract class ViewModelModule {
-
-    @Binds
-    internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+inline fun <reified T: ViewModel> Fragment.createViewModel(crossinline factory: () -> T): T = T::class.java.let { clazz ->
+    ViewModelProviders.of(this, object: ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            if(modelClass == clazz) {
+                @Suppress("UNCHECKED_CAST")
+                return factory() as T
+            }
+            throw IllegalArgumentException("Unexpected argument: $modelClass")
+        }
+    }).get(clazz)
 }

@@ -43,18 +43,4 @@ class NetworkModule {
 
         return builder.build()
     }
-
-    @Singleton
-    @Provides
-    fun provideGson(): Gson = Gson()
-
-
-    @Singleton
-    @Provides
-    fun provideGsonConverterFactory(gson: Gson? = null): GsonConverterFactory {
-        if (gson == null) {
-            return GsonConverterFactory.create(provideGson())
-        }
-        return GsonConverterFactory.create(gson)
-    }
 }
