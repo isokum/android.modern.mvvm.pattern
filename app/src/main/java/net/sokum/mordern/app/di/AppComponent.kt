@@ -4,6 +4,7 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import net.sokum.mordern.app.App
+import net.sokum.mordern.app.base.di.ViewModelModule
 import javax.inject.Singleton
 
 
@@ -12,7 +13,8 @@ import javax.inject.Singleton
     AndroidSupportInjectionModule::class,
     AppModule::class,
     NetworkModule::class,
-    ActivityBuilder::class
+    ActivityBuilder::class,
+    ViewModelModule::class
 ])
 abstract class AppComponent : AndroidInjector<App> {
     @Component.Factory

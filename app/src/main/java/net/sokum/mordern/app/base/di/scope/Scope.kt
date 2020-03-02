@@ -1,4 +1,4 @@
-package net.sokum.mordern.app.di
+package net.sokum.mordern.app.base.di.scope
 
 import javax.inject.Scope
 
