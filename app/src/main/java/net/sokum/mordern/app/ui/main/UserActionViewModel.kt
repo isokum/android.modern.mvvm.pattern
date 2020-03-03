@@ -11,11 +11,6 @@ import javax.inject.Inject
 class UserActionViewModel @Inject constructor(
     private val repository: LocalUsersRepository
 ) : BaseViewModel() {
-    companion object {
-        const val EVENT_LIKE_CHANGE = "like.change.event"
-    }
-
-    var uxEvent = MutableLiveData<UxEventModel<Boolean>>()
     var searchKeyword = MutableLiveData<String>()
 
     fun doSearch(keyword : String) {
@@ -32,10 +27,5 @@ class UserActionViewModel @Inject constructor(
         uiScope.launch {
             repository.delete(user)
         }
-        postLikeChangeEvent()
-    }
-
-    private fun postLikeChangeEvent() {
-        uxEvent.value = UxEventModel(EVENT_LIKE_CHANGE)
     }
 }

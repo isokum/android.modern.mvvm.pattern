@@ -15,7 +15,7 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactory : ViewModelFactory
 
-    lateinit var fragmentAdapter : MainTabFragmentAdapter
+    lateinit var adapter : MainTabAdapter
 
     lateinit var actionViewModel : UserActionViewModel
 
@@ -31,11 +31,11 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setupUI() {
-        fragmentAdapter =
-            MainTabFragmentAdapter(
+        adapter =
+            MainTabAdapter(
                 supportFragmentManager
             )
-        viewPager.adapter = fragmentAdapter
+        viewPager.adapter = adapter
 
         tabLayout.addTab(tabLayout.newTab().setText("API"))
         tabLayout.addTab(tabLayout.newTab().setText("Local"))
@@ -44,7 +44,7 @@ class MainActivity : BaseActivity() {
         searchBtn.setOnClickListener {
             doSearch(searchText.text.toString())
         }
-        searchText.setOnEditorActionListener { textView, i, keyEvent ->
+        searchText.setOnEditorActionListener { _, i, _ ->
             if ( i == EditorInfo.IME_ACTION_SEARCH) {
                 doSearch(searchText.text.toString())
             }

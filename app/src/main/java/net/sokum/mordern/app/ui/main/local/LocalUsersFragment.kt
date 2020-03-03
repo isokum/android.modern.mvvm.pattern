@@ -21,7 +21,7 @@ class LocalUsersFragment : BaseFragment {
     @Inject
     lateinit var viewModelFactory : ViewModelFactory
 
-    lateinit var userViewModel : LocalUsersViewModel
+    private lateinit var userViewModel : LocalUsersViewModel
 
     lateinit var actionViewModel : UserActionViewModel
 

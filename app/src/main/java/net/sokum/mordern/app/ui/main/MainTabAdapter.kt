@@ -7,7 +7,7 @@ import net.sokum.mordern.app.ui.main.local.LocalUsersFragment
 import net.sokum.mordern.app.ui.main.remote.RemoteUsersFragment
 
 
-class MainTabFragmentAdapter(fm: FragmentManager) :
+class MainTabAdapter(fm: FragmentManager) :
     FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     override fun getItem(position: Int): Fragment {
         return when (position) {

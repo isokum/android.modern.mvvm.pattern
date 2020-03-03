@@ -15,7 +15,7 @@ interface UserDao {
     @Delete
     suspend fun delete(user : UserItem)
 
-    @Query("SELECT * from users")
+    @Query("SELECT * from users ORDER BY login")
     fun findAll() : LiveData<List<UserItem>>
 
     @Query("SELECT * from users WHERE id = :id")
