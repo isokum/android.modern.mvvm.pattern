@@ -13,9 +13,4 @@ abstract class RemoteUsersModule {
     @IntoMap
     @ViewModelKey(RemoteUsersViewModel::class)
     abstract fun bindRemoteUsersViewModel(viewModel: RemoteUsersViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(UserActionViewModel::class)
-    abstract fun bindUserActionViewModel(viewModel: UserActionViewModel): ViewModel
 }

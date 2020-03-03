@@ -13,9 +13,4 @@ abstract class LocalUsersModule {
     @IntoMap
     @ViewModelKey(LocalUsersViewModel::class)
     abstract fun bindLocalUsersViewModel(viewModel: LocalUsersViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(UserActionViewModel::class)
-    abstract fun bindUserActionViewModel(viewModel: UserActionViewModel): ViewModel
 }

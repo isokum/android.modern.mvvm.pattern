@@ -5,7 +5,7 @@ import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import net.sokum.mordern.app.App
-import net.sokum.mordern.app.module.LikeUserStorage
+import net.sokum.mordern.app.data.LocalUsersRepository
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
@@ -30,8 +30,4 @@ class AppModule {
         }
         return GsonConverterFactory.create(gson)
     }
-
-    @Singleton
-    @Provides
-    fun provideLikeUserStorage() = LikeUserStorage()
 }

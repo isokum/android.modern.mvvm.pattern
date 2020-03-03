@@ -14,7 +14,8 @@ import javax.inject.Singleton
     AppModule::class,
     NetworkModule::class,
     ActivityBuilder::class,
-    ViewModelModule::class
+    ViewModelModule::class,
+    RoomModule::class
 ])
 abstract class AppComponent : AndroidInjector<App> {
     @Component.Factory

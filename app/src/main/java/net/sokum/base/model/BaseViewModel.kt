@@ -7,7 +7,7 @@ import kotlinx.coroutines.SupervisorJob
 
 open class BaseViewModel : ViewModel() {
     val viewModeJob = SupervisorJob()
-    val mainScope = CoroutineScope(Dispatchers.Main + viewModeJob)
+    val uiScope = CoroutineScope(Dispatchers.Main + viewModeJob)
 
     override fun onCleared() {
         super.onCleared()

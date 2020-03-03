@@ -1,17 +1,19 @@
 package net.sokum.mordern.app.ui.main
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.launch
+import net.sokum.base.model.BaseViewModel
 import net.sokum.base.model.UxEventModel
-import net.sokum.mordern.app.module.LikeUserStorage
+import net.sokum.mordern.app.data.LocalUsersRepository
 import net.sokum.mordern.app.data.UserItem
 import javax.inject.Inject
 
-class UserActionViewModel @Inject constructor(val localStorage : LikeUserStorage) : ViewModel() {
+class UserActionViewModel @Inject constructor(
+    private val repository: LocalUsersRepository
+) : BaseViewModel() {
     companion object {
         const val EVENT_LIKE_CHANGE = "like.change.event"
     }
-
 
     var uxEvent = MutableLiveData<UxEventModel<Boolean>>()
     var searchKeyword = MutableLiveData<String>()
@@ -21,19 +23,16 @@ class UserActionViewModel @Inject constructor(val localStorage : LikeUserStorage
     }
 
     fun likeUser(user: UserItem) {
-        localStorage.like(user)
-
-        postLikeChangeEvent()
+        uiScope.launch {
+            repository.insert(user)
+        }
     }
 
     fun unLikeUser(user : UserItem) {
-        localStorage.unlike(user)
-
+        uiScope.launch {
+            repository.delete(user)
+        }
         postLikeChangeEvent()
-    }
-
-    fun isLike(user : UserItem) : Boolean {
-        return localStorage.isLike(user)
     }
 
     private fun postLikeChangeEvent() {

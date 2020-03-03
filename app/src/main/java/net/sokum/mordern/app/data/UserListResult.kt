@@ -3,7 +3,6 @@ package net.sokum.mordern.app.data
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import net.sokum.mordern.app.module.LikeUserStorage
 
 data class UserList(
     @SerializedName("total_count")

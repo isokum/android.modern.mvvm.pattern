@@ -17,7 +17,6 @@ import net.sokum.base.network.Resource
 import net.sokum.base.ui.BaseFragment
 import net.sokum.mordern.app.data.UserList
 import net.sokum.mordern.app.ui.main.UserActionViewModel
-import net.sokum.mordern.app.ui.main.UserListAdapter
 import javax.inject.Inject
 
 class RemoteUsersFragment : BaseFragment() {
@@ -49,19 +48,16 @@ class RemoteUsersFragment : BaseFragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adatper
 
-        actionViewModel.uxEvent.observe(this, Observer {
-            if ( it.type === UserActionViewModel.EVENT_LIKE_CHANGE) {
-                adatper.notifyDataSetChanged()
-            }
+        userViewModel.likeUsers.observe(this, Observer {
+            adatper.submitLikeMap(it)
         })
+
 
         actionViewModel.searchKeyword.observe(this, Observer { keyword ->
             if ( keyword.isEmpty() ) {
                 adatper.submitList(mutableListOf())
             } else {
-                userViewModel.searchUser(keyword).observe(this, Observer {
-                    onUpdateUI(it)
-                })
+                userViewModel.searchUser(keyword).observe(this, onUpdateUI())
             }
         })
     }
@@ -74,18 +70,18 @@ class RemoteUsersFragment : BaseFragment() {
         actionViewModel = ViewModelProviders.of(activity!!, viewModelFactory)[UserActionViewModel::class.java]
     }
 
-    private fun onUpdateUI(res : Resource<UserList>) {
-        when (res) {
+    private fun onUpdateUI() = Observer<Resource<UserList>> {
+        when (it) {
             is Resource.Success -> {
                 processBar.visibility = View.GONE
-                adatper.submitList(res.data.items)
+                adatper.submitList(it.data.items)
             }
             is Resource.Loading -> {
                 processBar.visibility = View.VISIBLE
             }
             is Resource.Error -> {
                 processBar.visibility = View.GONE
-                Toast.makeText(activity, res.errorMessage, Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, it.errorMessage, Toast.LENGTH_SHORT).show()
             }
         }
     }
