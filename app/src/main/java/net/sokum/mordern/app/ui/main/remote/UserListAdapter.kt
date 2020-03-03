@@ -22,7 +22,7 @@ open class UserListAdapter(val context : Context, private val actionViewModel : 
     }
 
     override fun areContentsTheSame(oldItem: UserItem, newItem: UserItem): Boolean {
-        return oldItem.equals(newItem)
+        return oldItem == newItem
     }
 }) {
     var likeUsersMap = mapOf<Long, UserItem>()

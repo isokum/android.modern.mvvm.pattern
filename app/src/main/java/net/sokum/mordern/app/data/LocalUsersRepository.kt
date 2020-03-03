@@ -19,10 +19,6 @@ class LocalUsersRepository @Inject constructor(
         userDao.delete(user)
     }
 
-    fun isExists(id : Long) : Boolean {
-        return likeUserMap.value?.containsKey(id) ?: false
-    }
-
     fun search(query : String) : LiveData<List<UserItem>> {
         return userDao.findByLogin(query)
     }

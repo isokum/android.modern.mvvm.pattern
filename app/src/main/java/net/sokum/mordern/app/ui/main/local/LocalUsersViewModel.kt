@@ -7,10 +7,9 @@ import net.sokum.mordern.app.data.UserItem
 import javax.inject.Inject
 
 class LocalUsersViewModel @Inject constructor(
-    private val repository : LocalUsersRepository
+    repository : LocalUsersRepository
 ) : BaseViewModel() {
 
     var result = MutableLiveData<List<UserItem>>()
     var users = repository.likeUsers
-    var usersMap = repository.likeUserMap
 }

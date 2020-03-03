@@ -6,20 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_users.*
 import net.sokum.mordern.app.R
-import net.sokum.base.di.ViewModelFactory
+import net.sokum.base.di.activityViewModelProvider
+import net.sokum.base.di.viewModelProvider
 import net.sokum.base.ui.BaseFragment
 import net.sokum.mordern.app.ui.main.UserActionViewModel
 import net.sokum.mordern.app.ui.main.remote.UserListAdapter
-import javax.inject.Inject
 
 class LocalUsersFragment : BaseFragment {
-    @Inject
-    lateinit var viewModelFactory : ViewModelFactory
 
     private lateinit var userViewModel : LocalUsersViewModel
 
@@ -59,7 +56,7 @@ class LocalUsersFragment : BaseFragment {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
 
-        userViewModel = ViewModelProviders.of(this, viewModelFactory)[LocalUsersViewModel::class.java]
-        actionViewModel = ViewModelProviders.of(activity!!, viewModelFactory)[UserActionViewModel::class.java]
+        userViewModel = viewModelProvider()
+        actionViewModel = activityViewModelProvider()
     }
 }

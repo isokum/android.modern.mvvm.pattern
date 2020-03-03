@@ -7,22 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_users.*
 import net.sokum.mordern.app.R
-import net.sokum.base.di.ViewModelFactory
+import net.sokum.base.di.activityViewModelProvider
+import net.sokum.base.di.viewModelProvider
 import net.sokum.base.network.Resource
 import net.sokum.base.ui.BaseFragment
 import net.sokum.mordern.app.data.UserList
 import net.sokum.mordern.app.ui.main.UserActionViewModel
-import javax.inject.Inject
 
 class RemoteUsersFragment : BaseFragment() {
-    @Inject
-    lateinit var viewModelFactory : ViewModelFactory
-
     lateinit var userViewModel: RemoteUsersViewModel
 
     lateinit var actionViewModel : UserActionViewModel
@@ -66,8 +62,8 @@ class RemoteUsersFragment : BaseFragment() {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
 
-        userViewModel = ViewModelProviders.of(this, viewModelFactory)[RemoteUsersViewModel::class.java]
-        actionViewModel = ViewModelProviders.of(activity!!, viewModelFactory)[UserActionViewModel::class.java]
+        userViewModel = viewModelProvider()
+        actionViewModel = activityViewModelProvider()
     }
 
     private fun onUpdateUI() = Observer<Resource<UserList>> {
