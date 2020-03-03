@@ -14,7 +14,7 @@ data class UserList(
     val items : List<UserItem>
 )
 
-@Entity
+@Entity(tableName = "users")
 data class UserItem(
     @SerializedName("login")
     val login : String,
