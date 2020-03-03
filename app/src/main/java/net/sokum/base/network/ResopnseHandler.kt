@@ -1,4 +1,4 @@
-package net.sokum.mordern.app.base.network
+package net.sokum.base.network
 
 import com.google.gson.Gson
 import okhttp3.Headers
@@ -19,25 +19,45 @@ object ResponseHandler {
     private var gson = Gson()
 
     fun <T: Any> handleSuccess(data : T, headers : Headers) : Resource<T> {
-        return Resource.Success(data, headers.toMultimap())
+        return Resource.Success(
+            data,
+            headers.toMultimap()
+        )
     }
 
     fun <T:Any> handleFailure(code : Int, errorBody : ResponseBody?) : Resource<T> {
         if ( errorBody != null ) {
             try {
                 val errorBody = gson.fromJson(errorBody.string(), ErrorBody::class.java)
-                return Resource.Error(code, errorBody.message)
+                return Resource.Error(
+                    code,
+                    errorBody.message
+                )
             } catch (e: Exception) {
             }
         }
-        return Resource.Error(code, getErrorMessage(Int.MAX_VALUE))
+        return Resource.Error(
+            code,
+            getErrorMessage(Int.MAX_VALUE)
+        )
     }
 
     fun <T: Any> handleExecption(e : Exception) : Resource<T> {
         return when(e) {
-            is HttpException -> Resource.Error(e.code(), getErrorMessage(e.code()))
-            is SocketException -> Resource.Error(ErrorCodes.SocketItemOut.code, getErrorMessage(ErrorCodes.SocketItemOut.code))
-            else -> Resource.Error(ErrorCodes.SocketItemOut.code, getErrorMessage(Int.MAX_VALUE))
+            is HttpException -> Resource.Error(
+                e.code(),
+                getErrorMessage(e.code())
+            )
+            is SocketException -> Resource.Error(
+                ErrorCodes.SocketItemOut.code,
+                getErrorMessage(
+                    ErrorCodes.SocketItemOut.code
+                )
+            )
+            else -> Resource.Error(
+                ErrorCodes.SocketItemOut.code,
+                getErrorMessage(Int.MAX_VALUE)
+            )
         }
     }
 

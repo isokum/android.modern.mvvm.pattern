@@ -2,7 +2,7 @@ package net.sokum.mordern.app.ui.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import net.sokum.mordern.app.base.model.UxEvent
+import net.sokum.base.model.UxEventModel
 import net.sokum.mordern.app.module.LikeUserStorage
 import net.sokum.mordern.app.data.UserItem
 import javax.inject.Inject
@@ -13,7 +13,7 @@ class UserActionViewModel @Inject constructor(val localStorage : LikeUserStorage
     }
 
 
-    var uxEvent = MutableLiveData<UxEvent<Boolean>>()
+    var uxEvent = MutableLiveData<UxEventModel<Boolean>>()
     var searchKeyword = MutableLiveData<String>()
 
     fun doSearch(keyword : String) {
@@ -37,6 +37,6 @@ class UserActionViewModel @Inject constructor(val localStorage : LikeUserStorage
     }
 
     private fun postLikeChangeEvent() {
-        uxEvent.value = UxEvent(EVENT_LIKE_CHANGE)
+        uxEvent.value = UxEventModel(EVENT_LIKE_CHANGE)
     }
 }

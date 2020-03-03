@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_users.*
 import net.sokum.mordern.app.R
-import net.sokum.mordern.app.base.di.ViewModelFactory
-import net.sokum.mordern.app.base.ui.BaseFragment
+import net.sokum.base.di.ViewModelFactory
+import net.sokum.base.ui.BaseFragment
 import net.sokum.mordern.app.ui.main.UserActionViewModel
 import net.sokum.mordern.app.ui.main.UserListAdapter
 import javax.inject.Inject

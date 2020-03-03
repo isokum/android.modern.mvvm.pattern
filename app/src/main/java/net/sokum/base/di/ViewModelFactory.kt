@@ -1,4 +1,4 @@
-package net.sokum.mordern.app.base.di
+package net.sokum.base.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

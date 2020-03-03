@@ -4,14 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
-import net.sokum.mordern.app.base.network.Resource
+import net.sokum.base.model.BaseViewModel
+import net.sokum.base.network.Resource
 import net.sokum.mordern.app.data.RemoteUserRepository
 import net.sokum.mordern.app.data.UserList
 import javax.inject.Inject
 
-class RemoteUsersViewModel @Inject constructor(private val repository: RemoteUserRepository) : ViewModel() {
-    private val viewModeJob = SupervisorJob()
-    private val mainScope = CoroutineScope(Dispatchers.Main + viewModeJob)
+class RemoteUsersViewModel @Inject constructor(private val repository: RemoteUserRepository) : BaseViewModel() {
 
     fun searchUser(query : String) : LiveData<Resource<UserList>> {
         var data = MutableLiveData<Resource<UserList>> ()

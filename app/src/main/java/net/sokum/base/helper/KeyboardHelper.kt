@@ -1,4 +1,4 @@
-package net.sokum.mordern.app.base.helper
+package net.sokum.base.helper
 
 import android.app.Activity
 import android.content.Context

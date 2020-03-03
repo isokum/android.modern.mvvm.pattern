@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModelProviders
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import net.sokum.mordern.app.R
-import net.sokum.mordern.app.base.di.ViewModelFactory
-import net.sokum.mordern.app.base.helper.hideKeyboard
-import net.sokum.mordern.app.base.ui.BaseActivity
+import net.sokum.base.di.ViewModelFactory
+import net.sokum.base.helper.hideKeyboard
+import net.sokum.base.ui.BaseActivity
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {

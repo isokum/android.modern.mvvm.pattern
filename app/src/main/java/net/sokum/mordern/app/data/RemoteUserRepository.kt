@@ -1,8 +1,8 @@
 package net.sokum.mordern.app.data
 
 import net.sokum.mordern.app.api.GitHubApiService
-import net.sokum.mordern.app.base.network.Resource
-import net.sokum.mordern.app.base.network.ResponseHandler
+import net.sokum.base.network.Resource
+import net.sokum.base.network.ResponseHandler
 import java.lang.Exception
 import javax.inject.Inject
 

@@ -1,5 +1,7 @@
 package net.sokum.mordern.app.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import net.sokum.mordern.app.module.LikeUserStorage
 
@@ -12,9 +14,12 @@ data class UserList(
     val items : List<UserItem>
 )
 
+@Entity
 data class UserItem(
     @SerializedName("login")
     val login : String,
+
+    @PrimaryKey
     @SerializedName("id")
     val id : Long,
     @SerializedName("node_id")

@@ -1,4 +1,4 @@
-package net.sokum.mordern.app.base.network
+package net.sokum.base.network
 
 sealed class Resource<out T : Any> {
     data class Success<out T: Any>(val data: T, val headers : Map<String, List<String>>) : Resource<T>()
