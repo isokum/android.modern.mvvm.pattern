@@ -11,10 +11,16 @@ import javax.inject.Inject
 class UserActionViewModel @Inject constructor(
     private val repository: LocalUsersRepository
 ) : BaseViewModel() {
-    var searchKeyword = MutableLiveData<String>()
+    var searchKeywordRemote = MutableLiveData<String>()
+    var searchKeywordLocal = MutableLiveData<String>()
 
-    fun doSearch(keyword : String) {
-        searchKeyword.value = keyword
+
+    fun doSearch(tabIndex : Int, keyword : String) {
+        if ( tabIndex == 0 ) {
+            searchKeywordRemote.value = keyword
+        } else {
+            searchKeywordLocal.value = keyword
+        }
     }
 
     fun likeUser(user: UserItem) {

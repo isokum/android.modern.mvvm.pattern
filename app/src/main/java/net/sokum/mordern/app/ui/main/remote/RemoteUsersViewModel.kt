@@ -2,17 +2,16 @@ package net.sokum.mordern.app.ui.main.remote
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
 import net.sokum.base.model.BaseViewModel
 import net.sokum.base.network.Resource
 import net.sokum.mordern.app.data.LocalUsersRepository
-import net.sokum.mordern.app.data.RemoteUserRepository
+import net.sokum.mordern.app.data.RemoteUsersRepository
 import net.sokum.mordern.app.data.UserList
 import javax.inject.Inject
 
 class RemoteUsersViewModel @Inject constructor(
-    private val repository: RemoteUserRepository,
+    private val repository: RemoteUsersRepository,
     private val localRepository : LocalUsersRepository
 ) : BaseViewModel() {
     var likeUsers = localRepository.likeUserMap

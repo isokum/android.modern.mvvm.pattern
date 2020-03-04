@@ -2,11 +2,9 @@ package net.sokum.mordern.app.di
 
 import dagger.Module
 import dagger.Provides
-import net.sokum.mordern.app.api.AuthInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import net.sokum.mordern.app.BuildConfig
 import net.sokum.mordern.app.api.GitHubApiService
 import javax.inject.Singleton
 

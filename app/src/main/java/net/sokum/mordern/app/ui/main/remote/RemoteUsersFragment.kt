@@ -49,7 +49,7 @@ class RemoteUsersFragment : BaseFragment() {
         })
 
 
-        actionViewModel.searchKeyword.observe(this, Observer { keyword ->
+        actionViewModel.searchKeywordRemote.observe(this, Observer { keyword ->
             if ( keyword.isEmpty() ) {
                 adatper.submitList(mutableListOf())
             } else {

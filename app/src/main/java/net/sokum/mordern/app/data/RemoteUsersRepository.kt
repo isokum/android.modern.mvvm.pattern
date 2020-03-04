@@ -6,7 +6,7 @@ import net.sokum.base.network.ResponseHandler
 import java.lang.Exception
 import javax.inject.Inject
 
-class RemoteUserRepository @Inject constructor(
+class RemoteUsersRepository @Inject constructor(
     private val service : GitHubApiService
 ) {
     suspend fun searchUsers(query : String) : Resource<UserList> {

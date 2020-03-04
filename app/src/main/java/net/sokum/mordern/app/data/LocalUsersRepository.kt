@@ -20,6 +20,10 @@ class LocalUsersRepository @Inject constructor(
     }
 
     fun search(query : String) : LiveData<List<UserItem>> {
-        return userDao.findByLogin(query)
+        return if ( query?.isBlank() ===  false ) {
+            userDao.findByLogin("%$query%")
+        } else {
+            userDao.findAll()
+        }
     }
 }

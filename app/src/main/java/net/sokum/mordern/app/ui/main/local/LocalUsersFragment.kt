@@ -37,8 +37,8 @@ class LocalUsersFragment : BaseFragment {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        userViewModel.users.observe(this, Observer {
-            adatper.submitList(it)
+        actionViewModel.searchKeywordLocal.observe(this, Observer {
+            onRefreshList(it)
         })
 
         adatper =
@@ -49,6 +49,14 @@ class LocalUsersFragment : BaseFragment {
 
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adatper
+
+        onRefreshList("")
+    }
+
+    private fun onRefreshList(query: String) {
+        userViewModel.findByLogin(query).observe(this, Observer {res ->
+            adatper.submitList(res)
+        })
     }
 
 
