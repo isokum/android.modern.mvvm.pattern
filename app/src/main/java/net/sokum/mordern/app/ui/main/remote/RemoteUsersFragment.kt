@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_users.*
@@ -23,7 +24,7 @@ class RemoteUsersFragment : BaseFragment() {
 
     lateinit var actionViewModel : UserActionViewModel
 
-    lateinit var adatper : UserListAdapter
+    lateinit var adatper : UserPageListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +37,7 @@ class RemoteUsersFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        adatper = UserListAdapter(
+        adatper = UserPageListAdapter(
             context!!,
             actionViewModel
         )
@@ -51,11 +52,16 @@ class RemoteUsersFragment : BaseFragment() {
 
         actionViewModel.searchKeywordRemote.observe(this, Observer { keyword ->
             if ( keyword.isEmpty() ) {
-                adatper.submitList(mutableListOf())
+                adatper.submitList(null)
             } else {
-                userViewModel.searchUser(keyword).observe(this, onUpdateUI())
+                userViewModel.searchUserPage(keyword).observe(this, Observer {
+                    adatper.submitList(it)
+                })
+
+                userViewModel.getState().observe(this, onUpdateUI())
             }
         })
+
     }
 
     override fun onAttach(context: Context) {
@@ -68,16 +74,15 @@ class RemoteUsersFragment : BaseFragment() {
 
     private fun onUpdateUI() = Observer<Resource<UserList>> {
         when (it) {
-            is Resource.Success -> {
-                processBar.visibility = View.GONE
-                adatper.submitList(it.data.items)
-            }
             is Resource.Loading -> {
                 processBar.visibility = View.VISIBLE
             }
             is Resource.Error -> {
                 processBar.visibility = View.GONE
-                Toast.makeText(activity, it.errorMessage, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, it.errorMessage, Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                processBar.visibility = View.GONE
             }
         }
     }

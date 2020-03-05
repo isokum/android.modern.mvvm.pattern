@@ -14,7 +14,7 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <ProgressBar
-        style="?android:attr/progressBarStyleSmall"
+        style="?android:attr/progressBarStyleLarge"
         android:id="@+id/processBar"
         android:visibility="gone"
         android:layout_width="wrap_content"

@@ -9,9 +9,9 @@ import javax.inject.Inject
 class RemoteUsersRepository @Inject constructor(
     private val service : GitHubApiService
 ) {
-    suspend fun searchUsers(query : String) : Resource<UserList> {
+    suspend fun searchUsers(page: Int, query : String) : Resource<UserList> {
         try {
-            val response = service.searchUsers(query)
+            val response = service.searchUsers(page, query)
 
             if ( response.isSuccessful ) {
                 return ResponseHandler.handleSuccess(response.body()!!, response.headers())

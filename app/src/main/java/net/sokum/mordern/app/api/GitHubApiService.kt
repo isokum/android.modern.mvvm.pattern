@@ -11,5 +11,5 @@ interface GitHubApiService {
     }
 
     @GET("/search/users")
-    suspend fun searchUsers(@Query("q") query : String) : Response<UserList>
+    suspend fun searchUsers(@Query("page") page : Int, @Query("q") query : String) : Response<UserList>
 }
