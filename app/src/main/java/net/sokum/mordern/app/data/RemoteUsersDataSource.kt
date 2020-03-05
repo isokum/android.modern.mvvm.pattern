@@ -1,4 +1,4 @@
-package net.sokum.mordern.app.ui.main.remote
+package net.sokum.mordern.app.data
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
@@ -6,11 +6,7 @@ import androidx.paging.PageKeyedDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import net.sokum.base.network.Resource
-import net.sokum.mordern.app.data.RemoteUsersRepository
-import net.sokum.mordern.app.data.UserItem
-import net.sokum.mordern.app.data.UserList
 
 class RemoteUsersDataSource constructor(
     private val repository: RemoteUsersRepository,
@@ -69,7 +65,8 @@ class RemoteUsersDataSourceFactory(
     val dataSourceLiveData = MutableLiveData<RemoteUsersDataSource>()
 
     override fun create(): DataSource<Int, UserItem> {
-        val dataSource = RemoteUsersDataSource(repository, query)
+        val dataSource =
+            RemoteUsersDataSource(repository, query)
 
         dataSourceLiveData.postValue(dataSource)
         return dataSource

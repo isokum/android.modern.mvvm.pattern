@@ -8,10 +8,7 @@ import androidx.paging.PagedList
 import kotlinx.coroutines.*
 import net.sokum.base.model.BaseViewModel
 import net.sokum.base.network.Resource
-import net.sokum.mordern.app.data.LocalUsersRepository
-import net.sokum.mordern.app.data.RemoteUsersRepository
-import net.sokum.mordern.app.data.UserItem
-import net.sokum.mordern.app.data.UserList
+import net.sokum.mordern.app.data.*
 import javax.inject.Inject
 
 class RemoteUsersViewModel @Inject constructor(
@@ -20,26 +17,15 @@ class RemoteUsersViewModel @Inject constructor(
 ) : BaseViewModel() {
     var likeUsers = localRepository.likeUserMap
 
-    fun searchUser(query : String) : LiveData<Resource<UserList>> {
-        var data = MutableLiveData<Resource<UserList>> ()
-
-        uiScope.launch {
-            data.postValue(Resource.Loading("Loading"))
-
-            withContext(Dispatchers.Default) {
-                var resource = repository.searchUsers(1, query)
-                data.postValue(resource)
-            }
-        }
-        return data
-    }
-
-
     private val pageSize = 30
     private var dataSourceFactory : RemoteUsersDataSourceFactory? = null
 
     fun searchUserPage(query : String) : LiveData<PagedList<UserItem>> {
-        dataSourceFactory = RemoteUsersDataSourceFactory(repository, query)
+        dataSourceFactory =
+            RemoteUsersDataSourceFactory(
+                repository,
+                query
+            )
         val config = PagedList.Config.Builder()
             .setPageSize(pageSize)
             .setInitialLoadSizeHint(pageSize * 2)
@@ -51,10 +37,4 @@ class RemoteUsersViewModel @Inject constructor(
     fun getState(): LiveData<Resource<UserList>> = Transformations.switchMap<RemoteUsersDataSource,
             Resource<UserList>>(dataSourceFactory!!.dataSourceLiveData, RemoteUsersDataSource::state)
 
-
-    override fun onCleared() {
-        super.onCleared()
-
-        viewModeJob.cancel()
-    }
 }
