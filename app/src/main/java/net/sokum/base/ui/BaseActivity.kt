@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import net.sokum.base.di.ViewModelFactory
-import net.sokum.mordern.app.ui.main.UserActionViewModel
+import net.sokum.modern.app.ui.main.UserActionViewModel
 import javax.inject.Inject
 
 open class BaseActivity : AppCompatActivity() {

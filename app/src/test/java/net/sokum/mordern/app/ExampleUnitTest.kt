@@ -1,4 +1,4 @@
-package net.sokum.mordern.app
+package net.sokum.modern.app
 
 import org.junit.Test
 
