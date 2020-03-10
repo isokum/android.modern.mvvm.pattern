@@ -2,10 +2,15 @@ package net.sokum.modern.app.ui.main.remote
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
+import kotlinx.android.synthetic.main.main_cell_user_item.view.*
+import net.sokum.modern.app.GlideApp
 import net.sokum.modern.app.R
 import net.sokum.modern.app.data.UserItem
 import net.sokum.modern.app.ui.main.UserActionViewModel
@@ -48,6 +53,26 @@ open class UserPageListAdapter(val context : Context, private val actionViewMode
 
             override fun areContentsTheSame(oldItem: UserItem, newItem: UserItem): Boolean {
                 return oldItem == newItem
+            }
+        }
+    }
+}
+
+class UserItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    fun bind(data : UserItem, isLike : Boolean, actionViewModel : UserActionViewModel) {
+        GlideApp.with(itemView.context)
+            .load(data.avatarUrl)
+            .apply(RequestOptions.bitmapTransform(RoundedCorners(14)))
+            .into(itemView.avatar)
+
+        itemView.userName.text = data?.login
+
+        itemView.likeBtn.isChecked = isLike
+        itemView.likeBtn.setOnClickListener {
+            if ( isLike ) {
+                actionViewModel.unLikeUser(data)
+            } else {
+                actionViewModel.likeUser(data)
             }
         }
     }

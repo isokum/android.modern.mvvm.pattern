@@ -14,17 +14,14 @@ import net.sokum.base.di.activityViewModelProvider
 import net.sokum.base.di.viewModelProvider
 import net.sokum.base.ui.BaseFragment
 import net.sokum.modern.app.ui.main.UserActionViewModel
-import net.sokum.modern.app.ui.main.remote.UserListAdapter
 
-class LocalUsersFragment : BaseFragment {
+class LocalUsersFragment : BaseFragment() {
 
     private lateinit var userViewModel : LocalUsersViewModel
 
     lateinit var actionViewModel : UserActionViewModel
 
-    lateinit var adatper : UserListAdapter
-
-    constructor() : super()
+    lateinit var adapter : LocalUserListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,21 +38,17 @@ class LocalUsersFragment : BaseFragment {
             onRefreshList(it)
         })
 
-        adatper =
-            LocalUserListAdapter(
-                context!!,
-                actionViewModel
-            )
+        adapter = LocalUserListAdapter(actionViewModel)
 
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adatper
+        recyclerView.adapter = adapter
 
         onRefreshList("")
     }
 
     private fun onRefreshList(query: String) {
         userViewModel.findByLogin(query).observe(this, Observer {res ->
-            adatper.submitList(res)
+            adapter.submitList(res)
         })
     }
 

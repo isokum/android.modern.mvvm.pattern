@@ -1,11 +1,11 @@
 package net.sokum.base.list
 
-interface ListItem<in T : Any> {
-    fun isItemsSame(target: T): Boolean {
+interface ListItem {
+    fun isItemsSame(target : ListItem): Boolean {
         return this == target
     }
 
-    fun areContentsTheSame(target : T): Boolean {
+    fun areContentsTheSame(target : ListItem): Boolean {
         return false
     }
 }

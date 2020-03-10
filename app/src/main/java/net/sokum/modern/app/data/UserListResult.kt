@@ -12,7 +12,7 @@ data class UserList(
     val incompleteResults : Boolean,
     @SerializedName("items")
     val items : List<UserItem>
-) : ListItem<UserList>
+) : ListItem
 
 @Entity(tableName = "users")
 data class UserItem(
@@ -56,4 +56,4 @@ data class UserItem(
     val siteAdmin : Boolean,
     @SerializedName("score")
     val score : Float
-) : ListItem<UserList>
+) : ListItem

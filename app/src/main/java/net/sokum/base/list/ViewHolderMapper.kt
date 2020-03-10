@@ -1,15 +1,25 @@
 package net.sokum.base.list
 
+import net.sokum.base.model.BaseViewModel
 import kotlin.reflect.KClass
 
 class ViewHolderMapper {
-    val items : ArrayList<ViewHolderInfo> = arrayListOf()
+    val items : ArrayList<ViewHolderInfo>
 
-    fun findByItem(item : KClass<out ListItem<*>>) : ViewHolderInfo? {
+    constructor() {
+        this.items = arrayListOf()
+    }
+
+    constructor(items : ArrayList<ViewHolderInfo>) {
+        this.items = items
+    }
+
+
+    fun findByItem(item : KClass<out ListItem>) : ViewHolderInfo? {
         return items.firstOrNull { it.itemClazz == item }
     }
 
-    fun findByHolder(item : KClass<out BaseViewHolder<*>>) : ViewHolderInfo? {
+    fun findByHolder(item : KClass<out BaseViewHolder<*, *>>) : ViewHolderInfo? {
         return items.firstOrNull { it.itemClazz == item }
     }
 
@@ -20,6 +30,6 @@ class ViewHolderMapper {
 
 data class ViewHolderInfo(
     var type : Int = 0,
-    var itemClazz : KClass<ListItem<*>>,
-    var holderClazz : KClass<BaseViewHolder<ListItem<*>>>
+    var itemClazz : KClass<ListItem>,
+    var holderClazz : KClass<BaseViewHolder<ListItem, BaseViewModel>>
 )
