@@ -14,4 +14,4 @@ MVVM 패턴에 자주 사용되는 RxJava는 무겁고 더이상 필요하지 �
 5. Room: https://developer.android.com/topic/libraries/architecture/room.html
 6. Dagger2: https://dagger.dev/android
 7. Retrofit2: https://square.github.io/retrofit/
-8. Glide: https://github.com/bumptech/glide\
+8. Glide: https://github.com/bumptech/glide/
