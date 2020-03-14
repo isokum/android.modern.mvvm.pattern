@@ -12,8 +12,11 @@ import kotlinx.android.synthetic.main.fragment_users.*
 import net.sokum.modern.app.R
 import net.sokum.base.di.activityViewModelProvider
 import net.sokum.base.di.viewModelProvider
+import net.sokum.base.list.*
 import net.sokum.base.ui.BaseFragment
+import net.sokum.modern.app.data.UserItem
 import net.sokum.modern.app.ui.main.UserActionViewModel
+import net.sokum.modern.app.ui.main.local.cell.LocalUserItemViewHolder
 
 class LocalUsersFragment : BaseFragment() {
 
@@ -21,7 +24,7 @@ class LocalUsersFragment : BaseFragment() {
 
     lateinit var actionViewModel : UserActionViewModel
 
-    lateinit var adapter : LocalUserListAdapter
+    lateinit var adapter : ViewModelListAdapter<UserActionViewModel>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,11 +37,20 @@ class LocalUsersFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        userViewModel = viewModelProvider()
+        actionViewModel = activityViewModelProvider()
+
         actionViewModel.searchKeywordLocal.observe(this, Observer {
             onRefreshList(it)
         })
 
-        adapter = LocalUserListAdapter(actionViewModel)
+        adapter = ViewModelListAdapter(actionViewModel, viewHolderMapper {
+            map( { item -> item is UserItem }, {
+                LocalUserItemViewHolder(
+                    it
+                )
+            })
+        })
 
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
@@ -56,8 +68,5 @@ class LocalUsersFragment : BaseFragment() {
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
-
-        userViewModel = viewModelProvider()
-        actionViewModel = activityViewModelProvider()
     }
 }

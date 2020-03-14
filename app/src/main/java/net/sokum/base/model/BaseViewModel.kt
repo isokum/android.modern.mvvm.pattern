@@ -5,7 +5,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 
-open class BaseViewModel : ViewModel() {
+open abstract class BaseViewModel : ViewModel() {
     val viewModeJob = SupervisorJob()
     val uiScope = CoroutineScope(Dispatchers.Main + viewModeJob)
 
@@ -15,3 +15,5 @@ open class BaseViewModel : ViewModel() {
         viewModeJob.cancel()
     }
 }
+
+class EmptyViewModel : BaseViewModel()

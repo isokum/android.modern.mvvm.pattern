@@ -56,4 +56,8 @@ data class UserItem(
     val siteAdmin : Boolean,
     @SerializedName("score")
     val score : Float
-) : ListItem
+) : ListItem {
+    override fun areContentsTheSame(target: ListItem): Boolean {
+        return this.id == (target as UserItem).id
+    }
+}

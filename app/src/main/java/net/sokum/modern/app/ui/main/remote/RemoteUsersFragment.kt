@@ -37,6 +37,9 @@ class RemoteUsersFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        userViewModel = viewModelProvider()
+        actionViewModel = activityViewModelProvider()
+
         adatper = UserPageListAdapter(
             context!!,
             actionViewModel
@@ -67,9 +70,6 @@ class RemoteUsersFragment : BaseFragment() {
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
-
-        userViewModel = viewModelProvider()
-        actionViewModel = activityViewModelProvider()
     }
 
     private fun onUpdateUI() = Observer<Resource<UserList>> {

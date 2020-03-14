@@ -1,35 +1,31 @@
 package net.sokum.base.list
 
-import net.sokum.base.model.BaseViewModel
-import kotlin.reflect.KClass
+import android.view.ViewGroup
 
 class ViewHolderMapper {
-    val items : ArrayList<ViewHolderInfo>
+    private val items : ArrayList<ViewHolderInfo> = arrayListOf()
 
-    constructor() {
-        this.items = arrayListOf()
+    fun findByItem(item : ListItem) : ViewHolderInfo {
+        var info = items.firstOrNull { it.condition(item) }
+        return info ?: ViewHolderInfo(items.size, { true }, { UnSupportViewHolder(it) })
     }
 
-    constructor(items : ArrayList<ViewHolderInfo>) {
-        this.items = items
+    fun findByViewType(type : Int) : ViewHolderInfo{
+        var info = items.firstOrNull { it.type == type }
+        return info ?: ViewHolderInfo(items.size, { true }, { UnSupportViewHolder(it) })
     }
 
-
-    fun findByItem(item : KClass<out ListItem>) : ViewHolderInfo? {
-        return items.firstOrNull { it.itemClazz == item }
-    }
-
-    fun findByHolder(item : KClass<out BaseViewHolder<*, *>>) : ViewHolderInfo? {
-        return items.firstOrNull { it.itemClazz == item }
-    }
-
-    fun findByType(type : Int) : ViewHolderInfo?{
-        return items.firstOrNull { it.type == type }
+    fun map(itemType: (ListItem) -> Boolean = { true }, viewHolder : (ViewGroup) -> BaseViewHolder<*, *>) {
+        items.add(ViewHolderInfo(items.size, itemType, viewHolder))
     }
 }
 
 data class ViewHolderInfo(
-    var type : Int = 0,
-    var itemClazz : KClass<ListItem>,
-    var holderClazz : KClass<BaseViewHolder<ListItem, BaseViewModel>>
+    val type : Int = 0,
+    val condition: (ListItem) -> Boolean,
+    val factory : (ViewGroup) -> BaseViewHolder<*, *>
 )
+
+inline fun viewHolderMapper(buildFactory: ViewHolderMapper.() -> Unit): ViewHolderMapper {
+    return ViewHolderMapper().apply(buildFactory)
+}
